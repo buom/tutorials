@@ -1,0 +1,4 @@
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
+    implementation 'parts.code:money:1.0.0'
+}

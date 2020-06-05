@@ -1,3 +1,4 @@
+.gradle/**
 .idea/
 *.iml
 *.iws
@@ -5,3 +6,8 @@ out/
 .DS_Store
 log/*
 target/
+!.idea/codeStyles
+!.idea/codeStyles/codeStyleConfig.xml
+!.idea/codeStyles/Project.xml
+**/build/**
+**/out/**
