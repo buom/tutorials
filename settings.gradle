@@ -1,3 +1,4 @@
 rootProject.name = 'tutorials'
 
-include ':kotlin'
+include ':kotlin',
+        ':kafka-interactive-queries'

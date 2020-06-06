@@ -4,6 +4,21 @@ plugins {
 
 ext {
     jvmVersion = '1.8'
+    jacksonVersion = '2.10.2'
+    ratpackVersion = '1.8.0'
+    kafkaVersion = '2.4.1'
+    confluentVersion = '5.4.1'
+    avroVersion = '1.9.2'
+    logbackVersion = '1.2.3'
+
+    libs = [
+            jackson: ["com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion"],
+            ratpack: ["io.ratpack:ratpack-guice:$ratpackVersion"],
+            kafka  : ["org.apache.kafka:kafka-clients:$kafkaVersion",
+                      "org.apache.kafka:kafka-streams:$kafkaVersion",
+                      "io.confluent:kafka-avro-serializer:$confluentVersion",
+                      "io.confluent:kafka-streams-avro-serde:$confluentVersion"]
+    ]
 }
 
 allprojects {
@@ -22,10 +37,14 @@ subprojects {
 
     dependencies {
         implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+        implementation "ch.qos.logback:logback-classic:$logbackVersion"
     }
 
     test {
         useJUnitPlatform()
+        testLogging.showStandardStreams = true
+        testLogging.exceptionFormat = 'full'
+        testLogging.events 'passed', 'skipped', 'failed'
     }
 
     compileKotlin { kotlinOptions.jvmTarget = jvmVersion }

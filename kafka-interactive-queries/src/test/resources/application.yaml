@@ -1,0 +1,13 @@
+server:
+  port: 5050
+
+kafka:
+  applicationId: 'kafka-interactive-queries-application'
+  bootstrapServersConfig: 'localhost:9092'
+  schemaRegistryUrlConfig: 'http://localhost:8081'
+
+  topics:
+    balance: 'balance'
+
+  stateStores:
+    balanceReadModel: 'balance-read-model-state'

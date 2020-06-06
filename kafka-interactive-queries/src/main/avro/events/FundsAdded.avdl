@@ -1,0 +1,10 @@
+@namespace("parts.code.interactive.queries.schemas")
+protocol KafkaInteractiveQueries {
+
+  record FundsAdded {
+    string id;
+    timestamp_ms occurredOn;
+    string customerId;
+    decimal(4,2) amount;
+  }
+}

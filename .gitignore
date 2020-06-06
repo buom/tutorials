@@ -2,7 +2,6 @@
 .idea/
 *.iml
 *.iws
-out/
 .DS_Store
 log/*
 target/
@@ -11,3 +10,4 @@ target/
 !.idea/codeStyles/Project.xml
 **/build/**
 **/out/**
+**/jgiven-reports/**
