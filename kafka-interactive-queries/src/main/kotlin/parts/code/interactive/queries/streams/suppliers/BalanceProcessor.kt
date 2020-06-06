@@ -25,9 +25,9 @@ class BalanceProcessor @Inject constructor(private val config: KafkaConfig) : Pr
         if (record is FundsAdded) {
             val newBalance = (stateStore.get(record.customerId)?.amount ?: BigDecimal.ZERO) + record.amount
             stateStore.put(record.customerId, BalanceState(record.customerId, newBalance))
-        }
 
-        logger.info("Processed ${record.schema.name}\n\trecord: $record")
+            logger.info("Processed ${record.schema.name}\n\trecord: $record")
+        }
     }
 
     override fun close() {}
