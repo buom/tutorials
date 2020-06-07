@@ -18,6 +18,7 @@ import org.apache.kafka.streams.KafkaStreams
 import org.apache.kafka.streams.StreamsBuilder
 import org.apache.kafka.streams.StreamsConfig
 import org.apache.kafka.streams.processor.ProcessorSupplier
+import org.apache.kafka.streams.state.HostInfo
 import org.apache.kafka.streams.state.Stores
 import parts.code.interactive.queries.config.KafkaConfig
 import parts.code.interactive.queries.handlers.AddFundsHandler
@@ -25,6 +26,7 @@ import parts.code.interactive.queries.handlers.GetBalanceHandler
 import parts.code.interactive.queries.schemas.BalanceState
 import parts.code.interactive.queries.services.KafkaStreamService
 import parts.code.interactive.queries.streams.suppliers.BalanceProcessor
+import ratpack.server.ServerConfig
 import java.util.*
 import javax.inject.Singleton
 
@@ -32,7 +34,6 @@ class ApplicationModule : AbstractModule() {
 
     override fun configure() {
         bind(KafkaStreamService::class.java)
-        bind(BalanceProcessor::class.java)
         bind(AddFundsHandler::class.java)
         bind(GetBalanceHandler::class.java)
     }
@@ -41,18 +42,19 @@ class ApplicationModule : AbstractModule() {
     @Singleton
     fun provideKafkaStreams(
         config: KafkaConfig,
-        balanceProcessor: BalanceProcessor
+        hostInfo: HostInfo
     ): KafkaStreams {
         val builder = StreamsBuilder()
 
         builder
             .addBalanceStateStore(config)
             .stream<String, SpecificRecord>(config.topics.balance)
-            .process(ProcessorSupplier { balanceProcessor }, config.stateStores.balanceReadModel)
+            .process(ProcessorSupplier { BalanceProcessor(config) }, config.stateStores.balanceReadModel)
 
         val properties = Properties().apply {
             put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, config.bootstrapServersConfig)
             put(StreamsConfig.APPLICATION_ID_CONFIG, config.applicationId)
+            put(StreamsConfig.APPLICATION_SERVER_CONFIG, "${hostInfo.host()}:${hostInfo.port()}")
             put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String()::class.java)
             put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, SpecificAvroSerde::class.java)
             put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 1000)
@@ -63,6 +65,10 @@ class ApplicationModule : AbstractModule() {
 
         return KafkaStreams(builder.build(), properties)
     }
+
+    @Provides
+    @Singleton
+    fun provideHostInfo(serverConfig: ServerConfig): HostInfo = HostInfo("localhost", serverConfig.port)
 
     private fun StreamsBuilder.addBalanceStateStore(config: KafkaConfig): StreamsBuilder =
         addStateStore(

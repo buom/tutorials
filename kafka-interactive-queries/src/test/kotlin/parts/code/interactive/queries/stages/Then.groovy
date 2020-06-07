@@ -38,6 +38,8 @@ class Then extends Stage<Then> {
     }
 
     Then the_customer_balance_is_$(BigDecimal amount) {
+        Thread.sleep(5000)
+
         def httpClient = aut.instance1.httpClient.requestSpec { request ->
             request.headers {
                 it.set(HttpHeaderConstants.CONTENT_TYPE, MediaType.APPLICATION_JSON)

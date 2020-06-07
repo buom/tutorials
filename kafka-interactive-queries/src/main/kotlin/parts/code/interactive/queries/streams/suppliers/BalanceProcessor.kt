@@ -1,6 +1,5 @@
 package parts.code.interactive.queries.streams.suppliers
 
-import javax.inject.Inject
 import org.apache.avro.specific.SpecificRecord
 import org.apache.kafka.streams.processor.Processor
 import org.apache.kafka.streams.processor.ProcessorContext
@@ -11,7 +10,7 @@ import parts.code.interactive.queries.schemas.BalanceState
 import parts.code.interactive.queries.schemas.FundsAdded
 import java.math.BigDecimal
 
-class BalanceProcessor @Inject constructor(private val config: KafkaConfig) : Processor<String, SpecificRecord> {
+class BalanceProcessor constructor(private val config: KafkaConfig) : Processor<String, SpecificRecord> {
 
     private val logger = LoggerFactory.getLogger(BalanceProcessor::class.java)
     private lateinit var stateStore: KeyValueStore<String, BalanceState>
