@@ -12,7 +12,7 @@ import ratpack.server.BaseDir
 import ratpack.server.RatpackServer
 import java.time.Clock
 
-object Application {
+object StreamProcessingApplication {
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -24,6 +24,7 @@ object Application {
                         .yaml("application.yaml")
                         .require("/kafka", KafkaConfig::class.java)
                         .jacksonModules(KotlinModule())
+                        .env()
                 }
                 .registry(Guice.registry {
                     it

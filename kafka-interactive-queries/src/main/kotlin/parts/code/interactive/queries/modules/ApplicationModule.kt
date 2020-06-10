@@ -40,10 +40,7 @@ class ApplicationModule : AbstractModule() {
 
     @Provides
     @Singleton
-    fun provideKafkaStreams(
-        config: KafkaConfig,
-        hostInfo: HostInfo
-    ): KafkaStreams {
+    fun provideKafkaStreams(config: KafkaConfig, hostInfo: HostInfo): KafkaStreams {
         val builder = StreamsBuilder()
 
         builder
@@ -51,19 +48,19 @@ class ApplicationModule : AbstractModule() {
             .stream<String, SpecificRecord>(config.topics.balance)
             .process(ProcessorSupplier { BalanceProcessor(config) }, config.stateStores.balanceReadModel)
 
-        val properties = Properties().apply {
-            put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, config.bootstrapServersConfig)
-            put(StreamsConfig.APPLICATION_ID_CONFIG, config.applicationId)
-            put(StreamsConfig.APPLICATION_SERVER_CONFIG, "${hostInfo.host()}:${hostInfo.port()}")
-            put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String()::class.java)
-            put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, SpecificAvroSerde::class.java)
-            put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 1000)
-            put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
-            put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, config.schemaRegistryUrlConfig)
-            put("value.subject.name.strategy", TopicRecordNameStrategy::class.java)
-        }
+        val topology = builder.build()
 
-        return KafkaStreams(builder.build(), properties)
+        val properties = Properties()
+
+        properties[StreamsConfig.APPLICATION_ID_CONFIG] = config.applicationId
+        properties[StreamsConfig.APPLICATION_SERVER_CONFIG] = "${hostInfo.host()}:${hostInfo.port()}"
+        properties[StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG] = Serdes.String()::class.java
+        properties[StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG] = SpecificAvroSerde::class.java
+        properties[StreamsConfig.BOOTSTRAP_SERVERS_CONFIG] = config.bootstrapServersConfig
+        properties[KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG] = config.schemaRegistryUrlConfig
+        properties["value.subject.name.strategy"] = TopicRecordNameStrategy::class.java
+
+        return KafkaStreams(topology, properties)
     }
 
     @Provides

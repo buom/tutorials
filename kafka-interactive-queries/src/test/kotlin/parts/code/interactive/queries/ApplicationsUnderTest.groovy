@@ -5,13 +5,13 @@ import ratpack.impose.ImpositionsSpec
 import ratpack.test.MainClassApplicationUnderTest
 
 class ApplicationsUnderTest {
-    final def instance1 = new MainClassApplicationUnderTest(Application) {
+    final def instance1 = new MainClassApplicationUnderTest(StreamProcessingApplication) {
         void addImpositions(ImpositionsSpec impositions) {
             impositions.add(ForceServerListenPortImposition.of(5051))
         }
     }
 
-    final def instance2 = new MainClassApplicationUnderTest(Application) {
+    final def instance2 = new MainClassApplicationUnderTest(StreamProcessingApplication) {
         void addImpositions(ImpositionsSpec impositions) {
             impositions.add(ForceServerListenPortImposition.of(5052))
         }

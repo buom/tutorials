@@ -1,6 +1,3 @@
-server:
-  port: 5050
-
 kafka:
   applicationId: 'kafka-interactive-queries-application'
   bootstrapServersConfig: 'localhost:9092'
