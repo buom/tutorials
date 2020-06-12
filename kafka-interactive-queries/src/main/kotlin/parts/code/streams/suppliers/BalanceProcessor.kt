@@ -1,14 +1,14 @@
-package parts.code.interactive.queries.streams.suppliers
+package parts.code.streams.suppliers
 
+import java.math.BigDecimal
 import org.apache.avro.specific.SpecificRecord
 import org.apache.kafka.streams.processor.Processor
 import org.apache.kafka.streams.processor.ProcessorContext
 import org.apache.kafka.streams.state.KeyValueStore
 import org.slf4j.LoggerFactory
-import parts.code.interactive.queries.config.KafkaConfig
 import parts.code.interactive.queries.schemas.BalanceState
 import parts.code.interactive.queries.schemas.FundsAdded
-import java.math.BigDecimal
+import parts.code.streams.config.KafkaConfig
 
 class BalanceProcessor constructor(private val config: KafkaConfig) : Processor<String, SpecificRecord> {
 

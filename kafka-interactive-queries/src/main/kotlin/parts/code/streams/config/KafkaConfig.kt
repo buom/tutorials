@@ -1,4 +1,4 @@
-package parts.code.interactive.queries.config
+package parts.code.streams.config
 
 data class KafkaConfig(
     val applicationId: String,

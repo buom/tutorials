@@ -1,4 +1,4 @@
-package parts.code.interactive.queries.modules
+package parts.code.streams.modules
 
 import com.google.inject.AbstractModule
 import com.google.inject.Provides
@@ -7,9 +7,10 @@ import io.confluent.kafka.serializers.KafkaAvroSerializer
 import io.confluent.kafka.serializers.KafkaAvroSerializerConfig
 import io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
 import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+import java.util.Properties
+import javax.inject.Singleton
 import org.apache.avro.specific.SpecificRecord
 import org.apache.kafka.clients.CommonClientConfigs
-import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.common.serialization.Serdes
@@ -20,15 +21,13 @@ import org.apache.kafka.streams.StreamsConfig
 import org.apache.kafka.streams.processor.ProcessorSupplier
 import org.apache.kafka.streams.state.HostInfo
 import org.apache.kafka.streams.state.Stores
-import parts.code.interactive.queries.config.KafkaConfig
-import parts.code.interactive.queries.handlers.AddFundsHandler
-import parts.code.interactive.queries.handlers.GetBalanceHandler
 import parts.code.interactive.queries.schemas.BalanceState
-import parts.code.interactive.queries.services.KafkaStreamService
-import parts.code.interactive.queries.streams.suppliers.BalanceProcessor
+import parts.code.streams.config.KafkaConfig
+import parts.code.streams.handlers.AddFundsHandler
+import parts.code.streams.handlers.GetBalanceHandler
+import parts.code.streams.services.KafkaStreamService
+import parts.code.streams.suppliers.BalanceProcessor
 import ratpack.server.ServerConfig
-import java.util.*
-import javax.inject.Singleton
 
 class ApplicationModule : AbstractModule() {
 

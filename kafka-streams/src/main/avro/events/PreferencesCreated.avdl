@@ -1,0 +1,11 @@
+@namespace("parts.code.streams.schemas")
+protocol KafkaStreams {
+
+  record PreferencesCreated {
+    string id;
+    timestamp_ms occurredOn;
+    string customerId;
+    string currency;
+    string country;
+  }
+}

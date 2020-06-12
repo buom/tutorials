@@ -1,11 +1,10 @@
-package parts.code.interactive.queries
+package parts.code.streams
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import java.time.Clock
 import parts.code.streams.config.KafkaConfig
-import parts.code.streams.handlers.AddFundsHandler
-import parts.code.streams.handlers.GetBalanceHandler
+import parts.code.streams.handlers.CreatePreferencesHandler
 import parts.code.streams.modules.ApplicationModule
 import ratpack.guice.Guice
 import ratpack.handling.Chain
@@ -41,7 +40,6 @@ object StreamProcessingApplication {
 
     private fun endpoints(chain: Chain) {
         chain
-            .post("balance.addFunds", AddFundsHandler::class.java)
-            .get("customers.getBalance", GetBalanceHandler::class.java)
+            .post("preferences.create", CreatePreferencesHandler::class.java)
     }
 }

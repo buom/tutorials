@@ -8,19 +8,19 @@ Open the terminal and change the current directory to:
 cd kafka-interactive-queries
 ```
 
-Build the project:
-
-```
-../gradlew build
-```
-
 Start the Docker containers for Zookeeper, Kafka and Schema Registry:
 
 ```
 docker-compose up
 ```
 
-On a different terminal, start an instance of the application on port 5051:
+On a different terminal, build the project:
+
+```
+../gradlew build
+```
+
+Start an instance of the application on port 5051:
 
 ```
 RATPACK_PORT=5051 ../gradlew run

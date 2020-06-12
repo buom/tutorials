@@ -1,4 +1,4 @@
-package parts.code.interactive.queries.services
+package parts.code.streams.services
 
 import javax.inject.Inject
 import org.apache.kafka.streams.KafkaStreams

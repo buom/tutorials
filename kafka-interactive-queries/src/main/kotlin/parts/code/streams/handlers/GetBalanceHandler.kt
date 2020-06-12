@@ -1,20 +1,20 @@
-package parts.code.interactive.queries.handlers
+package parts.code.streams.handlers
 
+import java.math.BigDecimal
+import java.net.URI
+import javax.inject.Inject
 import org.apache.kafka.common.serialization.StringSerializer
 import org.apache.kafka.streams.KafkaStreams
 import org.apache.kafka.streams.state.HostInfo
 import org.apache.kafka.streams.state.QueryableStoreTypes
 import org.slf4j.LoggerFactory
-import parts.code.interactive.queries.config.KafkaConfig
 import parts.code.interactive.queries.schemas.BalanceState
+import parts.code.streams.config.KafkaConfig
 import ratpack.handling.Context
 import ratpack.handling.Handler
 import ratpack.http.Status
 import ratpack.http.client.HttpClient
 import ratpack.jackson.Jackson
-import java.math.BigDecimal
-import java.net.URI
-import javax.inject.Inject
 
 class GetBalanceHandler @Inject constructor(
     private val config: KafkaConfig,
