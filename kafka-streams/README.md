@@ -49,3 +49,7 @@ You should see something like this in the logs:
 ```
 Sent CreatePreferencesDenied to topic: preferences-authorization
 ```
+
+## 🏄🏻‍♀️ Tutorial
+
+For a more detailed explanation of this example of Kafka Streams, please check the following tutorial: [Introduction to Kafka Streams in Kotlin](https://code.parts/2020/06/13/kafka-streams-kotlin/)
