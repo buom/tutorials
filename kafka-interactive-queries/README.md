@@ -54,4 +54,6 @@ Reading local state store on localhost:5052
 
 ## 🏄🏻‍♀️ Tutorial
 
-For a more detailed explanation of this example of Kafka Interactive Queries, please check the following tutorial: [Create a Read Model using Kafka Streams State Stores](https://code.parts/2020/03/08/create-a-read-model-using-kafka-streams-state-stores/)
+For a more detailed explanation of this example of Kafka Interactive Queries, please check the following tutorials: 
+* [Create a Read Model using Kafka Streams State Stores](https://code.parts/2020/03/08/create-a-read-model-using-kafka-streams-state-stores/)
+* [Run Apache Kafka with Docker Compose](https://code.parts/2020/06/21/kafka-docker-compose-yml/)
