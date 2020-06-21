@@ -2,12 +2,14 @@ package parts.code.interactive.queries.stages
 
 import com.tngtech.jgiven.Stage
 import com.tngtech.jgiven.annotation.ExpectedScenarioState
+import com.tngtech.jgiven.annotation.Hidden
 import parts.code.interactive.queries.ApplicationsUnderTest
 import parts.code.interactive.queries.KafkaTestUtils
 import parts.code.interactive.queries.Topics
 import parts.code.interactive.queries.schemas.FundsAdded
 import ratpack.http.MediaType
 import ratpack.http.internal.HttpHeaderConstants
+import ratpack.test.MainClassApplicationUnderTest
 import spock.util.concurrent.PollingConditions
 
 import java.time.Duration
@@ -38,9 +40,16 @@ class Then extends Stage<Then> {
     }
 
     Then the_customer_balance_is_$(BigDecimal amount) {
-        Thread.sleep(5000)
+        new PollingConditions(timeout: 30, initialDelay: 5).eventually {
+            theCustomerBalanceIs(aut.instance1, amount)
+            theCustomerBalanceIs(aut.instance2, amount)
+        }
+        self()
+    }
 
-        def httpClient = aut.instance1.httpClient.requestSpec { request ->
+    @Hidden
+    void theCustomerBalanceIs(MainClassApplicationUnderTest app, BigDecimal amount) {
+        def httpClient = app.httpClient.requestSpec { request ->
             request.headers {
                 it.set(HttpHeaderConstants.CONTENT_TYPE, MediaType.APPLICATION_JSON)
             }
@@ -51,6 +60,5 @@ class Then extends Stage<Then> {
         def response = httpClient.get("/api/customers.getBalance")
         assert response.status.code == 200
         assert response.body.text == toJson([amount: amount])
-        self()
     }
 }
